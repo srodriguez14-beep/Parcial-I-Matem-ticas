@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="oscuro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cálculo Integral · Tecnología en Desarrollo de Software · UTP</title>
+  <meta name="description" content="Plataforma interactiva de Cálculo Integral: sumas de Riemann, trapecio, punto medio, Simpson, integral definida e integración directa.">
+  <!-- Evita el parpadeo: aplica el tema guardado antes de pintar -->
+  <script>try{document.documentElement.dataset.tema=localStorage.getItem('ci-tema')||'oscuro'}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:ital,wght@1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-base="">
+  <div id="app-header"></div>
+
+  <main id="contenido">
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="contenedor hero-grid">
+        <div>
+          <h1>Cálculo Integral, <br>hecho visible.</h1>
+          <p class="lead">Mueve los límites, cambia <em>n</em> y mira cómo los rectángulos, trapecios y parábolas se acercan al área real. Un curso interactivo para Tecnología en Desarrollo de Software de la Universidad Tecnológica de Pereira.</p>
+          <div class="hero-acciones">
+            <a class="btn" href="modulos/01-riemann/index.html">Empezar con Riemann</a>
+            <a class="btn btn-fantasma" href="#modulos">Ver los 14 módulos</a>
+          </div>
+        </div>
+        <!-- Barras decorativas: suma de Riemann de x² generada con JS -->
+        <div class="riemann-deco" id="deco" role="img" aria-label="Rectángulos de una suma de Riemann que aproximan la curva x al cuadrado">
+          <span class="formula" id="deco-formula"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Fases del proyecto ===== -->
+    <section class="contenedor" aria-labelledby="t-fases">
+      <h2 id="t-fases">Tres fases, un semestre</h2>
+      <ol class="fases">
+        <li class="actual aparece"><b>Fase 1 · Disponible</b>Módulos 1 a 6: métodos numéricos, integral definida e integración directa.<br><small>Estás aquí</small></li>
+        <li class="aparece"><b>Fase 2 · Próximamente</b>Módulos 7 a 10: sustitución, exponenciales, logarítmicas y trigonométricas.</li>
+        <li class="aparece"><b>Fase 3 · Próximamente</b>Módulos 11 a 14: inversas, hiperbólicas, trinomio y partes.</li>
+      </ol>
+    </section>
+
+    <!-- ===== Módulos ===== -->
+    <section class="contenedor" id="modulos" aria-labelledby="t-modulos">
+      <h2 id="t-modulos">Los 14 módulos</h2>
+      <p>Usa el buscador de arriba (o presiona <kbd>/</kbd>) para ir directo a un tema, o filtra por estado:</p>
+      <div class="filtro" role="group" aria-label="Filtrar módulos">
+        <button type="button" data-f="todos" aria-pressed="true">Todos (14)</button>
+        <button type="button" data-f="ok" aria-pressed="false">Disponibles (6)</button>
+        <button type="button" data-f="pronto" aria-pressed="false">Próximamente (8)</button>
+      </div>
+      <ul class="grid-modulos" id="grid"></ul>
+    </section>
+  </main>
+
+  <footer class="pie"><div class="contenedor">Universidad Tecnológica de Pereira · Cálculo Integral · Desarrollado con asistencia de IA</div></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="assets/js/modulos-data.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script>
+    /* ----- Barras decorativas: f(x)=x² con 14 rectángulos de punto medio ----- */
+    (function () {
+      const deco = document.getElementById('deco'), n = 14;
+      for (let i = 0; i < n; i++) {
+        const xm = (i + 0.5) / n;                 // punto medio en [0,1]
+        const b = document.createElement('i');
+        b.style.setProperty('--i', i);
+        b.style.height = (8 + 82 * xm * xm) + '%'; // altura ∝ f(xm)=xm²
+        deco.appendChild(b);
+      }
+      katex.render('\\int_0^1 x^2\\,dx \\approx M_{14}', document.getElementById('deco-formula'));
+    })();
+
+    /* ----- Tarjetas generadas desde MODULOS ----- */
+    const grid = document.getElementById('grid');
+    grid.innerHTML = MODULOS.map((m) => {
+      const ok = estaDisponible(m);
+      return `<li class="aparece" data-estado="${ok ? 'ok' : 'pronto'}">
+        <a class="tarjeta ${ok ? '' : 'pronto'}" href="${rutaModulo(m)}">
+          <div class="tarjeta-cab"><span class="icono" aria-hidden="true">${m.icono}</span><span class="num">Módulo ${m.n}</span></div>
+          <h3>${m.titulo}</h3>
+          <p>${m.desc}</p>
+          <span class="estado ${ok ? 'ok' : 'pronto'}">${ok ? 'Disponible' : 'Próximamente - Fase ' + m.fase}</span>
+        </a></li>`;
+    }).join('');
+    // Las tarjetas se crean después de ui.js, así que activamos su aparición aquí
+    grid.querySelectorAll('.aparece').forEach((el, i) => setTimeout(() => el.classList.add('visible'), 40 * i));
+
+    /* ----- Filtro por estado ----- */
+    document.querySelectorAll('.filtro button').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filtro button').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        grid.querySelectorAll('li').forEach((li) => {
+          li.hidden = btn.dataset.f !== 'todos' && li.dataset.estado !== btn.dataset.f;
+        });
+      });
+    });
+  </script>
+</body>
+</html>

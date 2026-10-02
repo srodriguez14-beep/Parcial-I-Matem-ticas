@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="oscuro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Integral Definida y Área bajo la Curva · Cálculo Integral</title>
+  <script>try{document.documentElement.dataset.tema=localStorage.getItem('ci-tema')||'oscuro'}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:ital,wght@1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-base="../../" data-modulo="5">
+  <div id="app-header"></div>
+  <main class="contenedor" id="contenido">
+    <div class="modulo-cab"><span class="num-grande">Módulo 5</span><h1>Integral Definida y Área bajo la Curva</h1></div>
+    <div class="pestanas" role="tablist" aria-label="Secciones del módulo"><button role="tab" id="t-teoria" aria-controls="p-teoria" aria-selected="true" tabindex="0">Teoría</button><button role="tab" id="t-visual" aria-controls="p-visual" aria-selected="false" tabindex="-1">Visualizador interactivo</button><button role="tab" id="t-ejemplos" aria-controls="p-ejemplos" aria-selected="false" tabindex="-1">Ejemplos resueltos</button></div>
+    <section id="p-teoria" role="tabpanel" aria-labelledby="t-teoria" class="panel">
+      <div class="caja formula"><h3>Teorema Fundamental del Cálculo</h3><p>Si $F$ es una antiderivada de $f$ (es decir, $F'(x)=f(x)$) y $f$ es continua en $[a,b]$:</p>$$\int_a^b f(x)\,dx=F(b)-F(a)$$</div>
+      <div class="caja formula"><h3>Área bajo la curva</h3><p>La integral cuenta con signo (lo que está bajo el eje $x$ resta). Para el área real usamos el valor absoluto:</p>$$A=\int_a^b |f(x)|\,dx$$</div>
+      <div class="caja formula"><h3>Área entre dos curvas</h3>$$A=\int_a^b |f(x)-g(x)|\,dx$$<p>Se hallan las intersecciones resolviendo $f(x)=g(x)$; entre ellas, se integra «curva de arriba − curva de abajo».</p></div>
+    </section>
+    <section id="p-visual" role="tabpanel" aria-labelledby="t-visual" class="panel" hidden>
+      <div id="viz5"></div>
+    </section>
+    <section id="p-ejemplos" role="tabpanel" aria-labelledby="t-ejemplos" class="panel" hidden>
+
+      <div class="caja ejemplo"><h3>Ejemplo 1 · $\displaystyle\int_0^2 (3x^2-2x+1)\,dx$</h3>
+        <p><b>Paso 1.</b> Antiderivada, término a término:</p>$$F(x)=\int(3x^2-2x+1)\,dx = x^3-x^2+x$$
+        <p><b>Paso 2.</b> Teorema Fundamental del Cálculo:</p>$$\int_0^2 (3x^2-2x+1)\,dx=F(2)-F(0)$$
+        <p><b>Paso 3.</b> Evaluar:</p>$$F(2)=8-4+2=6,\qquad F(0)=0\;\Rightarrow\; \int_0^2 (3x^2-2x+1)\,dx=6$$</div>
+      <div class="caja ejemplo"><h3>Ejemplo 2 · Área entre $f(x)=x^2$ y $g(x)=2x$</h3>
+        <p><b>Paso 1.</b> Intersecciones: $f(x)=g(x)$.</p>$$x^2=2x\;\Rightarrow\;x(x-2)=0\;\Rightarrow\;x=0\ \text{ o }\ x=2$$
+        <p><b>Paso 2.</b> ¿Cuál está arriba? En $x=1$: $g(1)=2>f(1)=1$, así que $g\ge f$ en $[0,2]$.</p>
+        <p><b>Paso 3.</b> Planteamiento:</p>$$A=\int_0^2 (2x-x^2)\,dx=\Big[x^2-\frac{x^3}{3}\Big]_0^2$$
+        <p><b>Paso 4.</b> Evaluar:</p>$$A=\Big(4-\frac{8}{3}\Big)-0=\frac{4}{3}\approx 1.3333$$</div>
+      <div class="caja ejemplo"><h3>Ejemplo 3 (opcional) · $\displaystyle\int_1^e \frac{1}{x}\,dx$</h3>
+        $$\int_1^e\frac{1}{x}\,dx=\ln|x|\Big|_1^e=\ln e-\ln 1=1-0=1$$</div>
+      <div class="caja ejemplo"><h3>Ejemplo 4 (opcional) · Área bajo $e^x$ en $[0,1]$</h3>
+        $$A=\int_0^1 e^x\,dx=e^x\Big|_0^1=e-1\approx 1.7183$$</div>
+    </section>
+    <div id="nav-modulos"></div>
+  </main>
+  <footer class="pie"><div class="contenedor">Universidad Tecnológica de Pereira · Cálculo Integral · Desarrollado con asistencia de IA</div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjs@12.4.2/lib/browser/math.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script src="../../assets/js/modulos-data.js"></script>
+  <script src="../../assets/js/ui.js"></script>
+  <script src="../../assets/js/matematicas.js"></script>
+  <script src="../../assets/js/graficos.js"></script>
+  <script src="../../assets/js/visualizador.js"></script>
+  <script src="modulo5.js"></script>
+</body>
+</html>

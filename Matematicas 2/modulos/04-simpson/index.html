@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="oscuro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Regla de Simpson · Cálculo Integral</title>
+  <script>try{document.documentElement.dataset.tema=localStorage.getItem('ci-tema')||'oscuro'}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:ital,wght@1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-base="../../" data-modulo="4">
+  <div id="app-header"></div>
+  <main class="contenedor" id="contenido">
+    <div class="modulo-cab"><span class="num-grande">Módulo 4</span><h1>Regla de Simpson</h1></div>
+    <div class="pestanas" role="tablist" aria-label="Secciones del módulo"><button role="tab" id="t-teoria" aria-controls="p-teoria" aria-selected="true" tabindex="0">Teoría</button><button role="tab" id="t-visual" aria-controls="p-visual" aria-selected="false" tabindex="-1">Visualizador interactivo</button><button role="tab" id="t-ejemplos" aria-controls="p-ejemplos" aria-selected="false" tabindex="-1">Ejemplos resueltos</button><button role="tab" id="t-comparador" aria-controls="p-comparador" aria-selected="false" tabindex="-1">Comparador de errores</button></div>
+    <section id="p-teoria" role="tabpanel" aria-labelledby="t-teoria" class="panel">
+      <div class="caja"><p>Simpson reemplaza la curva, en cada <b>par</b> de subintervalos, por una parábola que pasa por tres puntos consecutivos. Por eso <b>$n$ debe ser par</b>.</p></div>
+      <div class="caja formula">$$S_n=\frac{\Delta x}{3}\Big[f(x_0)+4\!\!\sum_{i\ \text{impar}}\!\!f(x_i)+2\!\!\sum_{i\ \text{par}}\!\!f(x_i)+f(x_n)\Big]$$<p>Los coeficientes siguen el patrón $1,4,2,4,2,\dots,4,1$.</p></div>
+      <div class="caja"><h3>Error</h3><p>Si $|f^{(4)}(x)|\le K$:</p>$$|E_S|\le\frac{K(b-a)^5}{180\,n^4}$$<p>Es exacta para polinomios de grado ≤ 3. Si $n$ es impar, la herramienta te avisará.</p></div>
+    </section>
+    <section id="p-visual" role="tabpanel" aria-labelledby="t-visual" class="panel" hidden>
+      <div id="viz"></div>
+    </section>
+    <section id="p-ejemplos" role="tabpanel" aria-labelledby="t-ejemplos" class="panel" hidden>
+      <div id="ejemplos"></div>
+    </section>
+    <section id="p-comparador" role="tabpanel" aria-labelledby="t-comparador" class="panel" hidden>
+      <p>Usa la misma función, intervalo y $n$ del visualizador. Cámbialos en la pestaña anterior y vuelve aquí.</p>
+      <div class="caja" id="comp-tabla"></div>
+      <div class="caja"><div id="comp-graf" class="grafica" role="img" aria-label="Barras de error por método"></div></div>
+    </section>
+    <div id="nav-modulos"></div>
+  </main>
+  <footer class="pie"><div class="contenedor">Universidad Tecnológica de Pereira · Cálculo Integral · Desarrollado con asistencia de IA</div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjs@12.4.2/lib/browser/math.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script src="../../assets/js/modulos-data.js"></script>
+  <script src="../../assets/js/ui.js"></script>
+  <script src="../../assets/js/matematicas.js"></script>
+  <script src="../../assets/js/graficos.js"></script>
+  <script src="../../assets/js/visualizador.js"></script>
+  <script src="../../assets/js/ejemplos.js"></script>
+  <script>
+    new Visualizador({ contenedor: 'viz', metodo: 'simpson', inicial: { expr: 'x^2', a: 0, b: 2, n: 4 },
+      alActualizar: (est) => { window._est = est; comparar(est, 'comp-tabla', 'comp-graf'); } });
+    document.addEventListener('tema-cambiado', () => window._est && comparar(window._est, 'comp-tabla', 'comp-graf'));
+    Ejemplos.numerico('ejemplos', { titulo: 'Ejemplo 1', expr: 'x^2', fTex: 'x^2', a: 0, b: 2, n: 4, metodo: 'simpson', exactoTex: '\\frac{8}{3}' });
+    Ejemplos.numerico('ejemplos', { titulo: 'Ejemplo 2', expr: 'sin(x)', fTex: '\\sin x', a: 0, b: Math.PI, bTex: '\\pi', n: 4, metodo: 'simpson', exactoTex: '2' });
+  </script>
+</body>
+</html>
