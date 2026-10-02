@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="oscuro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Regla del Punto Medio · Cálculo Integral</title>
+  <script>try{document.documentElement.dataset.tema=localStorage.getItem('ci-tema')||'oscuro'}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:ital,wght@1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-base="../../" data-modulo="3">
+  <div id="app-header"></div>
+  <main class="contenedor" id="contenido">
+    <div class="modulo-cab"><span class="num-grande">Módulo 3</span><h1>Regla del Punto Medio</h1></div>
+    <div class="pestanas" role="tablist" aria-label="Secciones del módulo"><button role="tab" id="t-teoria" aria-controls="p-teoria" aria-selected="true" tabindex="0">Teoría</button><button role="tab" id="t-visual" aria-controls="p-visual" aria-selected="false" tabindex="-1">Visualizador interactivo</button><button role="tab" id="t-ejemplos" aria-controls="p-ejemplos" aria-selected="false" tabindex="-1">Ejemplos resueltos</button></div>
+    <section id="p-teoria" role="tabpanel" aria-labelledby="t-teoria" class="panel">
+      <div class="caja"><p>La altura de cada rectángulo se toma en el <b>centro</b> del subintervalo. Los errores de exceso y de defecto dentro de cada rectángulo tienden a compensarse.</p></div>
+      <div class="caja formula">$$M_n=\Delta x\sum_{i=1}^{n} f(\bar{x}_i),\qquad \bar{x}_i=\frac{x_{i-1}+x_i}{2},\qquad \Delta x=\frac{b-a}{n}$$</div>
+      <div class="caja"><h3>Error</h3><p>Si $|f''(x)|\le K$:</p>$$|E_M|\le\frac{K(b-a)^3}{24\,n^2}$$<p>Es, en cota, la mitad del error del trapecio, y suele tener signo contrario.</p></div>
+    </section>
+    <section id="p-visual" role="tabpanel" aria-labelledby="t-visual" class="panel" hidden>
+      <div id="viz"></div>
+    </section>
+    <section id="p-ejemplos" role="tabpanel" aria-labelledby="t-ejemplos" class="panel" hidden>
+      <div id="ejemplos"></div>
+    </section>
+    <div id="nav-modulos"></div>
+  </main>
+  <footer class="pie"><div class="contenedor">Universidad Tecnológica de Pereira · Cálculo Integral · Desarrollado con asistencia de IA</div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjs@12.4.2/lib/browser/math.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script src="../../assets/js/modulos-data.js"></script>
+  <script src="../../assets/js/ui.js"></script>
+  <script src="../../assets/js/matematicas.js"></script>
+  <script src="../../assets/js/graficos.js"></script>
+  <script src="../../assets/js/visualizador.js"></script>
+  <script src="../../assets/js/ejemplos.js"></script>
+  <script>
+    new Visualizador({ contenedor: 'viz', metodo: 'medio', inicial: { expr: 'x^2', a: 0, b: 2, n: 4 } });
+    Ejemplos.numerico('ejemplos', { titulo: 'Ejemplo 1', expr: 'x^2', fTex: 'x^2', a: 0, b: 2, n: 4, metodo: 'medio', exactoTex: '\\frac{8}{3}' });
+    Ejemplos.numerico('ejemplos', { titulo: 'Ejemplo 2', expr: 'cos(x)', fTex: '\\cos x', a: 0, b: Math.PI / 2, bTex: '\\frac{\\pi}{2}', n: 4, metodo: 'medio', exactoTex: '1' });
+  </script>
+</body>
+</html>

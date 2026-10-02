@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="oscuro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Integración Directa · Cálculo Integral</title>
+  <script>try{document.documentElement.dataset.tema=localStorage.getItem('ci-tema')||'oscuro'}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:ital,wght@1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body data-base="../../" data-modulo="6">
+  <div id="app-header"></div>
+  <main class="contenedor" id="contenido">
+    <div class="modulo-cab"><span class="num-grande">Módulo 6</span><h1>Integración Directa</h1></div>
+    <div class="pestanas" role="tablist" aria-label="Secciones del módulo"><button role="tab" id="t-teoria" aria-controls="p-teoria" aria-selected="true" tabindex="0">Teoría</button><button role="tab" id="t-visual" aria-controls="p-visual" aria-selected="false" tabindex="-1">Visualizador interactivo</button><button role="tab" id="t-ejemplos" aria-controls="p-ejemplos" aria-selected="false" tabindex="-1">Ejemplos resueltos</button></div>
+    <section id="p-teoria" role="tabpanel" aria-labelledby="t-teoria" class="panel">
+      <div class="caja formula"><h3>Fórmulas básicas</h3>$$\int x^n\,dx=\frac{x^{n+1}}{n+1}+C\quad(n\ne-1)\qquad \int\frac{dx}{x}=\ln|x|+C\qquad \int k\,dx=kx+C$$</div>
+      <div class="caja formula"><h3>Linealidad</h3>$$\int\big[\alpha f(x)+\beta g(x)\big]dx=\alpha\!\int f(x)\,dx+\beta\!\int g(x)\,dx$$</div>
+      <div class="caja"><h3>Reescribir antes de integrar</h3>$$\sqrt[m]{x^n}=x^{n/m},\qquad \frac{1}{x^n}=x^{-n},\qquad \frac{1}{\sqrt{x}}=x^{-1/2}$$<p>Primero se convierte todo en potencias de $x$ (desarrollando productos si hace falta) y después se aplica la fórmula. Siempre se puede verificar derivando: $\frac{d}{dx}F(x)=f(x)$.</p></div>
+    </section>
+    <section id="p-visual" role="tabpanel" aria-labelledby="t-visual" class="panel" hidden>
+      <div id="viz6"></div>
+    </section>
+    <section id="p-ejemplos" role="tabpanel" aria-labelledby="t-ejemplos" class="panel" hidden>
+
+      <div class="caja ejemplo"><h3>Ejemplo a · $\displaystyle\int (ax+by)^2\,dx$ &nbsp;<small>(a, b, y constantes)</small></h3>
+        <p><b>Paso 1.</b> Desarrollar el cuadrado:</p>$$(ax+by)^2=a^2x^2+2abyx+b^2y^2$$
+        <p><b>Paso 2.</b> Integrar término a término (linealidad y regla de la potencia):</p>
+        $$\int a^2x^2\,dx=\frac{a^2x^3}{3},\qquad \int 2aby\,x\,dx=aby\,x^2,\qquad \int b^2y^2\,dx=b^2y^2x$$
+        <p><b>Resultado:</b></p>$$\int (ax+by)^2\,dx=\frac{a^2x^3}{3}+aby\,x^2+b^2y^2x+C$$</div>
+      <div class="caja ejemplo"><h3>Ejemplo b · $\displaystyle\int\Big(\frac{3}{x^2}-\frac{9}{\sqrt{x}}\Big)dx$</h3>
+        <p><b>Paso 1.</b> Reescribir como potencias:</p>$$\frac{3}{x^2}-\frac{9}{\sqrt{x}}=3x^{-2}-9x^{-1/2}$$
+        <p><b>Paso 2.</b> Regla de la potencia en cada término:</p>$$\int 3x^{-2}dx=3\cdot\frac{x^{-1}}{-1}=-\frac{3}{x},\qquad \int 9x^{-1/2}dx=9\cdot\frac{x^{1/2}}{1/2}=18\sqrt{x}$$
+        <p><b>Resultado:</b></p>$$\int\Big(\frac{3}{x^2}-\frac{9}{\sqrt{x}}\Big)dx=-\frac{3}{x}-18\sqrt{x}+C$$</div>
+      <div class="caja ejemplo"><h3>Ejemplo c · $\displaystyle\int (x-1)(x+1)\,dx$</h3>
+        <p><b>Paso 1.</b> Producto notable:</p>$$(x-1)(x+1)=x^2-1$$
+        <p><b>Paso 2.</b> Integrar:</p>$$\int (x^2-1)\,dx=\frac{x^3}{3}-x+C$$</div>
+      <div class="caja ejemplo"><h3>Ejemplo d · $\displaystyle\int\Big(x+4\sqrt{x}-\frac{4}{x}\Big)dx$</h3>
+        $$=\int\big(x+4x^{1/2}-4x^{-1}\big)dx=\frac{x^2}{2}+4\cdot\frac{x^{3/2}}{3/2}-4\ln|x|+C=\frac{x^2}{2}+\frac{8}{3}x^{3/2}-4\ln|x|+C$$</div>
+      <div class="caja ejemplo"><h3>Ejemplo e · $\displaystyle\int\Big(x-1-\frac{1}{x}\Big)dx$</h3>
+        $$=\frac{x^2}{2}-x-\ln|x|+C$$</div>
+    </section>
+    <div id="nav-modulos"></div>
+  </main>
+  <footer class="pie"><div class="contenedor">Universidad Tecnológica de Pereira · Cálculo Integral · Desarrollado con asistencia de IA</div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjs@12.4.2/lib/browser/math.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script src="../../assets/js/modulos-data.js"></script>
+  <script src="../../assets/js/ui.js"></script>
+  <script src="../../assets/js/matematicas.js"></script>
+  <script src="../../assets/js/graficos.js"></script>
+  <script src="../../assets/js/visualizador.js"></script>
+  <script src="modulo6.js"></script>
+</body>
+</html>
